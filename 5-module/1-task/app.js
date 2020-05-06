@@ -8,11 +8,9 @@ app.use(require('koa-bodyparser')());
 const Router = require('koa-router');
 const router = new Router();
 
-router.get('/subscribe', async (ctx, next) => {
-});
-
-router.post('/publish', async (ctx, next) => {
-});
+const chatController = require('./controller/chat');
+router.get('/subscribe/', chatController.subscribe);
+router.post('/publish', chatController.publish);
 
 app.use(router.routes());
 

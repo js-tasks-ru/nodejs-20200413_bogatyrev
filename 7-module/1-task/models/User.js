@@ -68,4 +68,15 @@ userSchema.methods.checkPassword = async function(password) {
   return hash === this.passwordHash;
 };
 
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({email}, {}).select('+password +salt');
+  if (!user) {
+    return false;
+  }
+  if (!await user.checkPassword(password)) {
+    return false
+  }
+  return user;
+};
+
 module.exports = connection.model('User', userSchema);

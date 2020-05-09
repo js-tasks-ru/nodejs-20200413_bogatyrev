@@ -71,11 +71,12 @@ userSchema.methods.checkPassword = async function(password) {
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({email}, {}).select('+password +salt');
   if (!user) {
-    return false;
+    return 'Нет такого пользователя';
   }
   if (!await user.checkPassword(password)) {
-    return false
+    return 'Неверный пароль';
   }
+
   return user;
 };
 
